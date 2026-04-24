@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estadística 2do Secundaria</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d1f;
+    --card: #16163a;
+    --card2: #1e1e4a;
+    --a1: #f7c948;
+    --a2: #ff6b6b;
+    --a3: #4ecdc4;
+    --a4: #a78bfa;
+    --green: #22c55e;
+    --red: #ef4444;
+    --text: #f0f0ff;
+    --muted: #9090b0;
+    --border: #2a2a5a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: #0a0a1a;
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow-x: auto;
+  }
+  .nav-logo {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    color: var(--a1);
+    margin-right: 2rem;
+    white-space: nowrap;
+    padding: 1rem 0;
+  }
+  .nav-btn {
+    padding: 1rem 1.2rem;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { color: var(--text); }
+  .nav-btn.active { color: var(--a1); border-bottom-color: var(--a1); }
+
+  /* SCREENS */
+  .screen { display: none; padding: 2rem; max-width: 900px; margin: 0 auto; }
+  .screen.active { display: block; }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: radial-gradient(ellipse at 50% 0%, #1a0050 0%, transparent 70%);
+  }
+  .hero h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3rem;
+    background: linear-gradient(135deg, var(--a1), var(--a2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+  .hero p { color: var(--muted); font-size: 1.1rem; margin-bottom: 2rem; }
+  .hero-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .hero-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: left;
+  }
+  .hero-card:hover { transform: translateY(-4px); border-color: var(--a4); }
+  .hero-card .icon { font-size: 2rem; margin-bottom: 0.8rem; }
+  .hero-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 0.3rem; }
+  .hero-card p { font-size: 0.82rem; color: var(--muted); }
+
+  /* LESSON */
+  .lesson-section {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+    animation: fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+  .lesson-section h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    color: var(--a1);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .lesson-section p { line-height: 1.8; color: #d0d0f0; margin-bottom: 0.8rem; }
+
+  .concept-box {
+    background: rgba(167, 139, 250, 0.08);
+    border-left: 4px solid var(--a4);
+    border-radius: 0 12px 12px 0;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+  }
+  .concept-box .term {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--a4);
+    margin-bottom: 0.4rem;
+  }
+  .concept-box p { margin: 0; font-size: 0.95rem; }
+
+  .example-box {
+    background: rgba(247, 201, 72, 0.07);
+    border-left: 4px solid var(--a1);
+    border-radius: 0 12px 12px 0;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+    color: #f0d080;
+    line-height: 1.7;
+  }
+  .example-box strong { color: var(--a1); }
+
+  .formula-box {
+    background: rgba(78, 205, 196, 0.08);
+    border: 1px solid rgba(78, 205, 196, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin: 1rem 0;
+    text-align: center;
+  }
+  .formula-box .formula {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--a3);
+    font-family: 'Courier New', monospace;
+  }
+  .formula-box p { font-size: 0.85rem; color: var(--muted); margin-top: 0.4rem; margin-bottom: 0; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; margin: 1rem 0; border-radius: 12px; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+  th {
+    background: var(--a4);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: center;
+    font-weight: 700;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    color: #d0d0f0;
+  }
+  tr:last-child td { font-weight: 700; color: var(--a1); }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  /* PROBLEMS */
+  .problem-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+    animation: fadeIn 0.4s ease;
+  }
+  .problem-num {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .problem-text { font-size: 0.97rem; line-height: 1.8; margin-bottom: 1rem; }
+  .problem-text b { color: var(--a1); }
+
+  .data-list {
+    background: var(--card2);
+    border-radius: 10px;
+    padding: 0.8rem 1.2rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: var(--a3);
+    margin: 0.8rem 0;
+    line-height: 1.8;
+    letter-spacing: 0.5px;
+  }
+
+  .input-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 0.8rem; }
+  .ans-label { font-size: 0.88rem; color: var(--muted); }
+  .ans-input {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text);
+    font-size: 0.9rem;
+    width: 90px;
+    font-family: 'Nunito', sans-serif;
+    transition: border-color 0.2s;
+  }
+  .ans-input:focus { outline: none; border-color: var(--a4); }
+  .ans-input.wide { width: 130px; }
+
+  .check-btn {
+    padding: 8px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--a4);
+    background: rgba(167,139,250,0.1);
+    color: var(--a4);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .check-btn:hover { background: rgba(167,139,250,0.2); }
+
+  .hint-btn {
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(78,205,196,0.3);
+    background: rgba(78,205,196,0.06);
+    color: var(--a3);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .hint-btn:hover { background: rgba(78,205,196,0.12); }
+
+  .hint-box {
+    background: rgba(78,205,196,0.07);
+    border: 1px solid rgba(78,205,196,0.2);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    font-size: 0.88rem;
+    color: var(--a3);
+    margin-top: 0.8rem;
+    display: none;
+    line-height: 1.6;
+  }
+  .feedback {
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-top: 0.8rem;
+    display: none;
+    line-height: 1.6;
+  }
+  .feedback.ok { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: var(--green); }
+  .feedback.fail { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: var(--red); }
+  .feedback.show { display: block; }
+
+  /* SCORE */
+  .score-strip {
+    display: flex;
+    gap: 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .score-item { text-align: center; }
+  .score-item .num { font-family: 'Fredoka One', cursive; font-size: 1.8rem; }
+  .score-item .lbl { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .num.g { color: var(--green); }
+  .num.r { color: var(--red); }
+  .num.y { color: var(--a1); }
+
+  .prog-wrap { height: 8px; background: var(--card2); border-radius: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+  .prog-fill { height: 100%; background: linear-gradient(90deg, var(--a4), var(--a3)); border-radius: 8px; transition: width 0.5s ease; }
+
+  /* TABLE INPUT */
+  .t-input {
+    padding: 5px 8px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text);
+    font-size: 0.85rem;
+    width: 75px;
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+  }
+  .t-input:focus { outline: none; border-color: var(--a4); }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+    background: linear-gradient(90deg, var(--a1), var(--a2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .section-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+  .tag-blue { background: rgba(78,205,196,0.15); color: var(--a3); }
+  .tag-yellow { background: rgba(247,201,72,0.15); color: var(--a1); }
+  .tag-purple { background: rgba(167,139,250,0.15); color: var(--a4); }
+  .tag-red { background: rgba(255,107,107,0.15); color: var(--a2); }
+
+  /* TIPO BOX */
+  .tipo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .tipo-box {
+    background: var(--card2);
+    border-radius: 14px;
+    padding: 1rem;
+    border: 1px solid var(--border);
+  }
+  .tipo-box h4 { font-size: 0.95rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .tipo-box ul { padding-left: 1.2rem; font-size: 0.88rem; color: var(--muted); line-height: 1.8; }
+  .tipo-box.q h4 { color: var(--a3); }
+  .tipo-box.ql h4 { color: var(--a2); }
+
+  /* STEP */
+  .steps { counter-reset: step; margin: 1rem 0; }
+  .step {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+  .step-num {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--a4);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; font-size: 0.93rem; line-height: 1.7; padding-top: 4px; }
+  .step-content b { color: var(--a4); }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 2rem; }
+    .tipo-grid { grid-template-columns: 1fr; }
+    .screen { padding: 1rem; }
+    nav { padding: 0 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">📊 EstadísticaQuest</div>
+  <button class="nav-btn active" onclick="goScreen('home',this)">Inicio</button>
+  <button class="nav-btn" onclick="goScreen('l1',this)">📘 Lección 1</button>
+  <button class="nav-btn" onclick="goScreen('l2',this)">📋 Lección 2</button>
+  <button class="nav-btn" onclick="goScreen('l3',this)">📐 Lección 3</button>
+  <button class="nav-btn" onclick="goScreen('prob',this)">🧩 Problemas</button>
+</nav>
+
+<!-- HOME -->
+<div id="screen-home" class="screen active">
+  <div class="hero">
+    <h1>EstadísticaQuest 🎮</h1>
+    <p>Aprende estadística de 2do de secundaria — con lecciones claras y problemas prácticos</p>
+    <div class="hero-cards">
+      <div class="hero-card" onclick="goScreenId('l1')">
+        <div class="icon">📘</div>
+        <h3>Lección 1 — Conceptos Base</h3>
+        <p>Población, muestra y variable estadística</p>
+      </div>
+      <div class="hero-card" onclick="goScreenId('l2')">
+        <div class="icon">📋</div>
+        <h3>Lección 2 — Tablas</h3>
+        <p>Tablas de distribución de frecuencias</p>
+      </div>
+      <div class="hero-card" onclick="goScreenId('l3')">
+        <div class="icon">📐</div>
+        <h3>Lección 3 — Frecuencias</h3>
+        <p>Absoluta, relativa y porcentual</p>
+      </div>
+      <div class="hero-card" onclick="goScreenId('prob')">
+        <div class="icon">🧩</div>
+        <h3>Problemas Prácticos</h3>
+        <p>7 ejercicios con pistas y corrección automática</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LECCIÓN 1 -->
+<div id="screen-l1" class="screen">
+  <div class="section-title">📘 Lección 1</div>
+  <div class="section-sub">Introducción a la Estadística — Población, Muestra y Variable</div>
+
+  <div class="lesson-section">
+    <h2>¿Qué es la Estadística?</h2>
+    <p>La <strong>estadística</strong> es la ciencia que se encarga de <em>recopilar, organizar, analizar e interpretar datos</em> para poder tomar decisiones o sacar conclusiones.</p>
+    <div class="example-box">
+      <strong>Ejemplo del día a día:</strong><br>
+      Cuando el profe pregunta cuántos alumnos prefieren fútbol o vóley y anota los resultados en la pizarra → eso es estadística básica.
+    </div>
+    <p>La estadística está en todos lados: encuestas, notas del colegio, el tiempo, deportes, redes sociales...</p>
+  </div>
+
+  <div class="lesson-section">
+    <h2>👥 Población</h2>
+    <div class="concept-box">
+      <div class="term">Población</div>
+      <p>Es el <strong>conjunto COMPLETO</strong> de personas, objetos o elementos que queremos estudiar. Es "todo el grupo".</p>
+    </div>
+    <div class="example-box">
+      <strong>Ejemplos:</strong><br>
+      • Todos los alumnos del colegio (si estudias las notas del colegio)<br>
+      • Todos los autos del Perú (si estudias el color de autos)<br>
+      • Todos los pacientes de un hospital (si estudias una enfermedad)
+    </div>
+    <p>⚠️ A veces la población es tan grande que es imposible estudiarla completa. Para eso existe la <strong>muestra</strong>.</p>
+  </div>
+
+  <div class="lesson-section">
+    <h2>🔬 Muestra</h2>
+    <div class="concept-box">
+      <div class="term">Muestra</div>
+      <p>Es una <strong>parte representativa</strong> de la población que se selecciona para el estudio. Debe ser lo más representativa posible.</p>
+    </div>
+    <div class="example-box">
+      <strong>Mismo ejemplo:</strong><br>
+      Población = 800 alumnos del colegio<br>
+      Muestra = 60 alumnos elegidos al azar para la encuesta<br><br>
+      <strong>Clave:</strong> La muestra debe representar bien a toda la población. Si solo encuestas a los de tu salón, puede no ser representativa.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📏 Variable Estadística</h2>
+    <div class="concept-box">
+      <div class="term">Variable Estadística</div>
+      <p>Es la <strong>característica o dato que se mide u observa</strong> en cada elemento de la población o muestra.</p>
+    </div>
+    <p>Existen dos tipos principales:</p>
+    <div class="tipo-grid">
+      <div class="tipo-box q">
+        <h4>📊 Cuantitativa (numérica)</h4>
+        <ul>
+          <li>Se expresa con números</li>
+          <li>Se puede operar matemáticamente</li>
+          <li>Ej: edad, peso, nota, estatura, temperatura</li>
+        </ul>
+      </div>
+      <div class="tipo-box ql">
+        <h4>🏷️ Cualitativa (categórica)</h4>
+        <ul>
+          <li>Describe una característica, no un número</li>
+          <li>No se puede sumar ni promediar</li>
+          <li>Ej: color, género, lugar de nacimiento, deporte favorito</li>
+        </ul>
+      </div>
+    </div>
+    <div class="example-box">
+      <strong>Ejemplo completo:</strong><br>
+      Estudio: "Horas de sueño de los alumnos del colegio"<br>
+      → Población: todos los 800 alumnos del colegio<br>
+      → Muestra: 60 alumnos elegidos al azar<br>
+      → Variable: horas de sueño (cuantitativa, porque es un número)
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:1.5rem;">
+    <button class="check-btn" style="font-size:1rem;padding:12px 30px;" onclick="goScreenId('l2')">Siguiente: Tablas de Frecuencia →</button>
+  </div>
+</div>
+
+<!-- LECCIÓN 2 -->
+<div id="screen-l2" class="screen">
+  <div class="section-title">📋 Lección 2</div>
+  <div class="section-sub">Tablas de Distribución de Frecuencias</div>
+
+  <div class="lesson-section">
+    <h2>¿Qué es una tabla de frecuencias?</h2>
+    <p>Cuando tenemos muchos datos, es difícil analizarlos uno por uno. Una <strong>tabla de distribución de frecuencias</strong> organiza los datos mostrando cuántas veces aparece cada valor.</p>
+    <div class="example-box">
+      <strong>Situación:</strong> Las notas de 20 alumnos fueron:<br>
+      12, 15, 10, 12, 18, 15, 12, 10, 18, 15, 12, 10, 15, 18, 12, 15, 10, 18, 12, 15<br><br>
+      Es difícil analizar esto así. ¡Por eso hacemos una tabla!
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📝 Cómo construir una tabla</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content"><b>Identifica los valores distintos</b> que aparecen en los datos. En el ejemplo: 10, 12, 15, 18.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content"><b>Cuenta cuántas veces aparece cada valor</b> (eso es la frecuencia absoluta). Ejemplo: el 10 aparece 4 veces.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content"><b>Calcula la frecuencia relativa:</b> hi = fi ÷ n (frecuencia entre total de datos).</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content"><b>Calcula el porcentaje:</b> % = hi × 100.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📊 Ejemplo completo de tabla</h2>
+    <p>Con los datos del ejemplo (n = 20 alumnos):</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Nota (xi)</th><th>Frec. Absoluta (fi)</th><th>Frec. Relativa (hi)</th><th>Porcentaje (%)</th></tr>
+        <tr><td>10</td><td>4</td><td>0.20</td><td>20%</td></tr>
+        <tr><td>12</td><td>6</td><td>0.30</td><td>30%</td></tr>
+        <tr><td>15</td><td>6</td><td>0.30</td><td>30%</td></tr>
+        <tr><td>18</td><td>4</td><td>0.20</td><td>20%</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>20</strong></td><td><strong>1.00</strong></td><td><strong>100%</strong></td></tr>
+      </table>
+    </div>
+    <div class="example-box">
+      <strong>Cómo interpretar la tabla:</strong><br>
+      • El valor con mayor fi es el más frecuente (en este caso 12 y 15 empatan con fi=6).<br>
+      • La suma de todas las fi siempre debe ser igual a n (total de datos).<br>
+      • La suma de todos los hi siempre da 1.00.<br>
+      • La suma de todos los % siempre da 100%.
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:1.5rem;">
+    <button class="check-btn" style="font-size:1rem;padding:12px 30px;" onclick="goScreenId('l3')">Siguiente: Tipos de Frecuencia →</button>
+  </div>
+</div>
+
+<!-- LECCIÓN 3 -->
+<div id="screen-l3" class="screen">
+  <div class="section-title">📐 Lección 3</div>
+  <div class="section-sub">Frecuencia Absoluta, Relativa y Porcentual</div>
+
+  <div class="lesson-section">
+    <h2>📌 Frecuencia Absoluta (fi)</h2>
+    <div class="concept-box">
+      <div class="term">Frecuencia Absoluta — fi</div>
+      <p>Es el <strong>número exacto de veces</strong> que aparece un dato o valor en los datos recolectados.</p>
+    </div>
+    <div class="example-box">
+      Si en un salón de 30 alumnos, 8 tienen la nota 14:<br>
+      → fi de la nota 14 = <strong>8</strong><br><br>
+      Simplemente CUENTAS cuántas veces aparece ese valor.
+    </div>
+    <p>La suma de todas las frecuencias absolutas siempre es igual al total de datos (n):</p>
+    <div class="formula-box">
+      <div class="formula">Σ fi = n</div>
+      <p>La suma de todas las fi = total de datos</p>
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📌 Frecuencia Relativa (hi)</h2>
+    <div class="concept-box">
+      <div class="term">Frecuencia Relativa — hi</div>
+      <p>Es la <strong>proporción</strong> que representa un valor respecto al total de datos. Siempre está entre 0 y 1.</p>
+    </div>
+    <div class="formula-box">
+      <div class="formula">hi = fi ÷ n</div>
+      <p>hi = frecuencia absoluta dividida entre el total de datos</p>
+    </div>
+    <div class="example-box">
+      <strong>Ejemplo:</strong><br>
+      fi = 8 (ocho alumnos tienen nota 14)<br>
+      n = 30 (total de alumnos)<br>
+      hi = 8 ÷ 30 = <strong>0.267</strong><br><br>
+      La suma de todos los hi siempre es = 1.00
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>📌 Frecuencia Porcentual (%)</h2>
+    <div class="concept-box">
+      <div class="term">Frecuencia Porcentual — %</div>
+      <p>Es la frecuencia relativa <strong>expresada en porcentaje</strong>. Nos dice "de cada 100 datos, cuántos tienen ese valor".</p>
+    </div>
+    <div class="formula-box">
+      <div class="formula">% = hi × 100</div>
+      <p>O también: % = (fi ÷ n) × 100</p>
+    </div>
+    <div class="example-box">
+      <strong>Ejemplo:</strong><br>
+      hi = 0.267<br>
+      % = 0.267 × 100 = <strong>26.7%</strong><br><br>
+      Esto significa: el 26.7% de los alumnos tiene nota 14.
+    </div>
+  </div>
+
+  <div class="lesson-section">
+    <h2>🧩 Las 3 frecuencias juntas — resumen</h2>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Frecuencia</th><th>Símbolo</th><th>Fórmula</th><th>Suma total</th></tr>
+        <tr><td>Absoluta</td><td>fi</td><td>Conteo directo</td><td>= n</td></tr>
+        <tr><td>Relativa</td><td>hi</td><td>fi ÷ n</td><td>= 1.00</td></tr>
+        <tr><td>Porcentual</td><td>%</td><td>hi × 100</td><td>= 100%</td></tr>
+      </table>
+    </div>
+    <div class="example-box">
+      <strong>Truco para recordar el orden:</strong><br>
+      fi → (÷n) → hi → (×100) → %<br>
+      ¡Siempre va en ese orden!
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:1.5rem;">
+    <button class="check-btn" style="font-size:1rem;padding:12px 30px;" onclick="goScreenId('prob')">¡Ir a los Problemas! 🧩</button>
+  </div>
+</div>
+
+<!-- PROBLEMAS -->
+<div id="screen-prob" class="screen">
+  <div class="section-title">🧩 Problemas</div>
+  <div class="section-sub">Pon a prueba lo que aprendiste — 7 ejercicios prácticos</div>
+
+  <div class="score-strip">
+    <div class="score-item"><div class="num g" id="sc-ok">0</div><div class="lbl">Correctas</div></div>
+    <div class="score-item"><div class="num r" id="sc-fail">0</div><div class="lbl">Incorrectas</div></div>
+    <div class="score-item"><div class="num y" id="sc-tot">0</div><div class="lbl">Intentadas</div></div>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+
+  <!-- P1 -->
+  <div class="tag tag-blue">Lección 1 — Conceptos</div>
+  <div class="problem-card">
+    <div class="problem-num">Problema 1 de 7</div>
+    <div class="problem-text">
+      En tu colegio hay <b>800 alumnos</b>. El director quiere saber cuántas horas duermen en promedio, así que encuesta a <b>60 alumnos</b> del turno mañana.<br><br>
+      a) ¿Cuántos forman la <b>población</b>? <input class="ans-input" id="p1a" type="number" placeholder="nº"> alumnos<br><br>
+      b) ¿Cuántos forman la <b>muestra</b>? <input class="ans-input" id="p1b" type="number" placeholder="nº"> alumnos
+    </div>
+    <div class="input-row">
+      <button class="check-btn" onclick="check1()">✔ Verificar</button>
+      <button class="hint-btn" onclick="hint('h1')">💡 Pista</button>
+    </div>
+    <div class="hint-box" id="h1">Población = TODOS los elementos del grupo completo. Muestra = la parte elegida para estudiar.</div>
+    <div class="feedback ok" id="ok1">✔ ¡Correcto! Población = 800 (todos los alumnos del colegio). Muestra = 60 (los encuestados). Variable = horas de sueño.</div>
+    <div class="feedback fail" id="fail1">✘ Revisa: la población son los 800 alumnos del colegio. La muestra son los 60 encuestados.</div>
+  </div>
+
+  <!-- P2 -->
+  <div class="problem-card">
+    <div class="problem-num">Problema 2 de 7</div>
+    <div class="problem-text">
+      Clasifica cada variable escribiendo <b>C</b> (cuantitativa) o <b>CL</b> (cualitativa):
+    </div>
+    1. Nota de matemáticas (0–20) → <input class="ans-input" id="v1" placeholder="C o CL" style="width:75px"><br><br>
+    2. Color favorito → <input class="ans-input" id="v2" placeholder="C o CL" style="width:75px"><br><br>
+    3. Peso en kilogramos → <input class="ans-input" id="v3" placeholder="C o CL" style="width:75px"><br><br>
+    4. Lugar de nacimiento → <input class="ans-input" id="v4" placeholder="C o CL" style="width:75px">
+    <div class="input-row" style="margin-top:1rem;">
+      <button class="check-btn" onclick="check2()">✔ Verificar</button>
+      <button class="hint-btn" onclick="hint('h2')">💡 Pista</button>
+    </div>
+    <div class="hint-box" id="h2">Cuantitativa = se mide con número (nota, peso, edad). Cualitativa = describe algo sin número (color, lugar, género).</div>
+    <div class="feedback ok" id="ok2">✔ ¡Correcto! Nota → C, Color → CL, Peso → C, Lugar → CL.</div>
+    <div class="feedback fail" id="fail2">✘ Recuerda: C = número (nota, peso). CL = sin número (color, lugar).</div>
+  </div>
+
+  <!-- P3 -->
+  <div class="tag tag-yellow" style="margin-top:1rem;">Lección 2 — Tablas</div>
+  <div class="problem-card">
+    <div class="problem-num">Problema 3 de 7</div>
+    <div class="problem-text">
+      Se registraron las notas de <b>20 alumnos</b>:
+    </div>
+    <div class="data-list">12, 15, 10, 12, 18, 15, 12, 10, 18, 15,<br>12, 10, 15, 18, 12, 15, 10, 18, 12, 15</div>
+    <p style="font-size:0.9rem;color:var(--muted);margin-bottom:0.8rem;">Completa la tabla contando cuántas veces aparece cada nota:</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Nota (xi)</th><th>Frec. Absoluta (fi)</th></tr>
+        <tr><td>10</td><td><input class="t-input" id="f10" type="number"></td></tr>
+        <tr><td>12</td><td><input class="t-input" id="f12" type="number"></td></tr>
+        <tr><td>15</td><td><input class="t-input" id="f15" type="number"></td></tr>
+        <tr><td>18</td><td><input class="t-input" id="f18" type="number"></td></tr>
+        <tr><td>Total</td><td>20</td></tr>
+      </table>
+    </div>
+    <div class="input-row">
+      <button class="check-btn" onclick="check3()">✔ Verificar</button>
+      <button class="hint-btn" onclick="hint('h3')">💡 Pista</button>
+    </div>
+    <div class="hint-box" id="h3">Cuenta manualmente cuántas veces aparece cada nota. El 10 aparece en las posiciones 3, 8, 12 y 17. ¿Cuántas son?</div>
+    <div class="feedback ok" id="ok3">✔ ¡Perfecto! fi: 10→4, 12→6, 15→6, 18→4. Suma total = 20 ✓</div>
+    <div class="feedback fail" id="fail3">✘ Vuelve a contar: el 10 aparece 4 veces, el 12 aparece 6 veces, el 15 aparece 6 veces, el 18 aparece 4 veces.</div>
+  </div>
+
+  <!-- P4 -->
+  <div class="problem-card">
+    <div class="problem-num">Problema 4 de 7</div>
+    <div class="problem-text">
+      Usando la tabla del problema anterior, responde:<br><br>
+      a) ¿Cuál es la nota más frecuente? <input class="ans-input" id="p4a" type="number"> <br><br>
+      b) ¿Cuántos alumnos <b>aprobaron</b> (nota ≥ 11)? <input class="ans-input" id="p4b" type="number"> alumnos
+    </div>
+    <div class="input-row">
+      <button class="check-btn" onclick="check4()">✔ Verificar</button>
+      <button class="hint-btn" onclick="hint('h4')">💡 Pista</button>
+    </div>
+    <div class="hint-box" id="h4">a) La nota más frecuente tiene el mayor fi. Fíjate en la tabla: 12 y 15 tienen fi=6 (ambas son válidas). b) Suma las fi de las notas que son ≥ 11.</div>
+    <div class="feedback ok" id="ok4">✔ ¡Correcto! Nota más frecuente: 12 o 15 (ambas con fi=6). Aprobados = 6+6+4 = 16 alumnos.</div>
+    <div class="feedback fail" id="fail4">✘ La nota más frecuente es 12 o 15 (fi=6). Los aprobados son: fi de 12 + fi de 15 + fi de 18 = 6+6+4 = 16.</div>
+  </div>
+
+  <!-- P5 -->
+  <div class="tag tag-purple" style="margin-top:1rem;">Lección 3 — Frecuencias</div>
+  <div class="problem-card">
+    <div class="problem-num">Problema 5 de 7</div>
+    <div class="problem-text">
+      En un grupo de <b>40 estudiantes</b>, 8 prefieren fútbol. Calcula:<br><br>
+      a) Frecuencia relativa (hi) = <input class="ans-input" id="p5a" placeholder="0.xx"><br><br>
+      b) Frecuencia porcentual = <input class="ans-input" id="p5b" type="number"> %
+    </div>
+    <div class="input-row">
+      <button class="check-btn" onclick="check5()">✔ Verificar</button>
+      <button class="hint-btn" onclick="hint('h5')">💡 Pista</button>
+    </div>
+    <div class="hint-box" id="h5">hi = fi ÷ n = 8 ÷ 40. Luego % = hi × 100.</div>
+    <div class="feedback ok" id="ok5">✔ ¡Exacto! hi = 8÷40 = 0.20. Porcentaje = 0.20×100 = 20%.</div>
+    <div class="feedback fail" id="fail5">✘ Recuerda: hi = fi÷n = 8÷40 = 0.20. Porcentaje = 0.20 × 100 = 20%.</div>
+  </div>
+
+  <!-- P6 -->
+  <div class="problem-card">
+    <div class="problem-num">Problema 6 de 7</div>
+    <div class="problem-text">
+      Completa la tabla de frecuencias para un grupo de <b>25 alumnos</b>:
+    </div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Deporte</th><th>fi</th><th>hi (÷25)</th><th>%</th></tr>
+        <tr><td>Fútbol</td><td>10</td><td><input class="t-input" id="hi1" placeholder="0.xx"></td><td><input class="t-input" id="pc1" type="number">%</td></tr>
+        <tr><td>Vóley</td><td>8</td><td><input class="t-input" id="hi2" placeholder="0.xx"></td><td><input class="t-input" id="pc2" type="number">%</td></tr>
+        <tr><td>Básquet</td><td>7</td><td><input class="t-input" id="hi3" placeholder="0.xx"></td><td><input class="t-input" id="pc3" type="number">%</td></tr>
+        <tr><td>Total</td><td>25</td><td>1.00</td><td>100%</td></tr>
+      </table>
+    </div>
+    <div class="input-row">
+      <button class="check-btn" onclick="check6()">✔ Verificar</button>
+      <button class="hint-btn" onclick="hint('h6')">💡 Pista</button>
+    </div>
+    <div class="hint-box" id="h6">hi = fi ÷ 25. Luego % = hi × 100. Ejemplo fútbol: hi = 10÷25 = 0.40, % = 0.40×100 = 40%.</div>
+    <div class="feedback ok" id="ok6">✔ ¡Muy bien! Fútbol: hi=0.40 / 40%. Vóley: hi=0.32 / 32%. Básquet: hi=0.28 / 28%.</div>
+    <div class="feedback fail" id="fail6">✘ Revisa: Fútbol hi=0.40 (40%), Vóley hi=0.32 (32%), Básquet hi=0.28 (28%).</div>
+  </div>
+
+  <!-- P7 -->
+  <div class="tag tag-red" style="margin-top:1rem;">🔥 Desafío</div>
+  <div class="problem-card">
+    <div class="problem-num">Problema 7 de 7 — Desafío Inverso</div>
+    <div class="problem-text">
+      Si la frecuencia relativa de un valor es <b>hi = 0.25</b> y el total de datos es <b>n = 60</b>:<br><br>
+      ¿Cuál es la <b>frecuencia absoluta</b> (fi)? fi = <input class="ans-input" id="p7" type="number">
+    </div>
+    <div class="input-row">
+      <button class="check-btn" onclick="check7()">✔ Verificar</button>
+      <button class="hint-btn" onclick="hint('h7')">💡 Pista</button>
+    </div>
+    <div class="hint-box" id="h7">Sabemos que hi = fi ÷ n, entonces despejamos fi: fi = hi × n = 0.25 × 60.</div>
+    <div class="feedback ok" id="ok7">✔ ¡Excelente! fi = hi × n = 0.25 × 60 = 15. Supiste despejar la fórmula.</div>
+    <div class="feedback fail" id="fail7">✘ Usa fi = hi × n = 0.25 × 60 = 15. Despeja fi de la fórmula hi = fi ÷ n.</div>
+  </div>
+</div>
+
+<script>
+  let correct=0, wrong=0, total=0;
+
+  function goScreen(id, btn) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('screen-'+id).classList.add('active');
+    if(btn) btn.classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function goScreenId(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('screen-'+id).classList.add('active');
+    const map = {home:0,l1:1,l2:2,l3:3,prob:4};
+    const btns = document.querySelectorAll('.nav-btn');
+    if(btns[map[id]]) btns[map[id]].classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function hint(id) { document.getElementById(id).style.display='block'; }
+
+  function upScore(ok) {
+    total++;
+    if(ok) correct++; else wrong++;
+    document.getElementById('sc-ok').textContent = correct;
+    document.getElementById('sc-fail').textContent = wrong;
+    document.getElementById('sc-tot').textContent = total;
+    document.getElementById('prog').style.width = Math.min(100, Math.round(correct/7*100)) + '%';
+  }
+
+  function showFeedback(okId, failId, ok) {
+    document.getElementById(okId).className = 'feedback ok' + (ok?' show':'');
+    document.getElementById(failId).className = 'feedback fail' + (!ok?' show':'');
+  }
+
+  function check1() {
+    const a=parseInt(document.getElementById('p1a').value);
+    const b=parseInt(document.getElementById('p1b').value);
+    const ok = (a===800 && b===60);
+    showFeedback('ok1','fail1',ok); upScore(ok);
+  }
+  function check2() {
+    const v=[
+      document.getElementById('v1').value.trim().toUpperCase(),
+      document.getElementById('v2').value.trim().toUpperCase(),
+      document.getElementById('v3').value.trim().toUpperCase(),
+      document.getElementById('v4').value.trim().toUpperCase()
+    ];
+    const ok = (v[0]==='C' && v[1]==='CL' && v[2]==='C' && v[3]==='CL');
+    showFeedback('ok2','fail2',ok); upScore(ok);
+  }
+  function check3() {
+    const f10=parseInt(document.getElementById('f10').value);
+    const f12=parseInt(document.getElementById('f12').value);
+    const f15=parseInt(document.getElementById('f15').value);
+    const f18=parseInt(document.getElementById('f18').value);
+    const ok = (f10===4 && f12===6 && f15===6 && f18===4);
+    showFeedback('ok3','fail3',ok); upScore(ok);
+  }
+  function check4() {
+    const a=parseInt(document.getElementById('p4a').value);
+    const b=parseInt(document.getElementById('p4b').value);
+    const ok = ((a===12||a===15) && b===16);
+    showFeedback('ok4','fail4',ok); upScore(ok);
+  }
+  function check5() {
+    const a=parseFloat(document.getElementById('p5a').value);
+    const b=parseFloat(document.getElementById('p5b').value);
+    const ok = (Math.abs(a-0.20)<0.01 && Math.abs(b-20)<0.5);
+    showFeedback('ok5','fail5',ok); upScore(ok);
+  }
+  function check6() {
+    const hi1=parseFloat(document.getElementById('hi1').value);
+    const pc1=parseFloat(document.getElementById('pc1').value);
+    const hi2=parseFloat(document.getElementById('hi2').value);
+    const pc2=parseFloat(document.getElementById('pc2').value);
+    const hi3=parseFloat(document.getElementById('hi3').value);
+    const pc3=parseFloat(document.getElementById('pc3').value);
+    const ok = (
+      Math.abs(hi1-0.40)<0.01 && Math.abs(pc1-40)<0.5 &&
+      Math.abs(hi2-0.32)<0.01 && Math.abs(pc2-32)<0.5 &&
+      Math.abs(hi3-0.28)<0.01 && Math.abs(pc3-28)<0.5
+    );
+    showFeedback('ok6','fail6',ok); upScore(ok);
+  }
+  function check7() {
+    const v=parseInt(document.getElementById('p7').value);
+    const ok = (v===15);
+    showFeedback('ok7','fail7',ok); upScore(ok);
+  }
+</script>
+</body>
+</html>
